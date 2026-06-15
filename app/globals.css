@@ -1,0 +1,562 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --main-color: #ff4040;
+
+  --bg-color: #111111;
+
+  --panel-bg: #181818;
+
+  --card-bg: #232323;
+
+  --text-color: #e8e8e8;
+
+  --line-color: rgba(255, 255, 255, 0.08);
+
+  --neon: 0 0 10px rgba(255, 64, 64, 0.35), 0 0 20px rgba(255, 64, 64, 0.15);
+}
+
+body {
+  background: radial-gradient(
+      circle at top left,
+      rgba(255, 0, 0, 0.1),
+      transparent 30%
+    ),
+    radial-gradient(circle at top right, rgba(255, 0, 0, 0.1), transparent 30%),
+    radial-gradient(circle at center, rgba(255, 80, 80, 0.04), transparent 50%),
+    linear-gradient(180deg, #111111, #050505);
+
+  color: var(--text-color);
+
+  font-family: sans-serif;
+}
+
+/* 전체 */
+
+.mainLayout {
+  display: grid;
+
+  grid-template-columns:
+    250px
+    600px
+    600px
+    720px;
+
+  justify-content: center;
+
+  column-gap: 80px;
+
+  padding: 30px 40px;
+}
+
+/* 좌측 */
+
+.leftPanel {
+  background: #181818;
+
+  border-radius: 16px;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+
+  height: calc(98vh - 40px);
+}
+
+.logoBox {
+  height: 100px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.guildBox {
+  color: #d85a5a;
+
+  padding: 20px;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+}
+
+.guildBox h2 {
+  font-size: 20px;
+  line-height: 1.2;
+}
+
+.menuTitle {
+  width: 100%;
+  height: 60px;
+
+  border: none;
+
+  background: linear-gradient(180deg, #ff5a5a, #d82828);
+
+  color: white;
+
+  font-weight: bold;
+
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    0 4px 12px rgba(255, 64, 64, 0.25);
+}
+
+.deckButton {
+  width: 100%;
+  height: 60px;
+
+  border: none;
+
+  background: #181818;
+
+  color: #cfcfcf;
+
+  cursor: pointer;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.addButton {
+  width: 100%;
+  height: 60px;
+
+  border: none;
+
+  background: #181818;
+
+  color: #ff4040;
+
+  font-size: 30px;
+
+  cursor: pointer;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+.deckMenu {
+  flex: 1;
+}
+
+.bottomButtons {
+  margin-top: auto;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.bottomBtn {
+  height: 60px;
+
+  border: none;
+
+  color: white;
+
+  font-weight: 600;
+
+  background: linear-gradient(180deg, #ff5d5d, #d82828);
+
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    0 4px 12px rgba(255, 64, 64, 0.25);
+
+  cursor: pointer;
+}
+
+.updateDate {
+  padding: 16px;
+
+  text-align: center;
+
+  font-size: 11px;
+
+  color: #777;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* 공통 패널 */
+
+.panel {
+  background: linear-gradient(180deg, #1d1d1d, #141414);
+
+  border-radius: 16px;
+
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+
+  padding: 24px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.deckColumn {
+  display: flex;
+  flex-direction: column;
+}
+
+/* 덱카드 */
+
+.deckCard {
+  margin-top: 24px;
+
+  min-height: 180px;
+
+  border-radius: 20px;
+
+  padding: 24px;
+
+  background: linear-gradient(180deg, #262626, #1f1f1f);
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+
+  transition: 0.2s;
+
+  border: none;
+}
+
+.deckHeader {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  margin-bottom: 20px;
+}
+
+.heroRow {
+  display: flex;
+
+  gap: 16px;
+}
+
+.detailBtn {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  height: 26px;
+
+  padding: 0 12px;
+
+  border: none;
+
+  border-radius: 8px;
+
+  background: linear-gradient(180deg, #ff6b6b, #ff4040);
+
+  color: white;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  box-shadow: 0 2px 8px rgba(255, 64, 64, 0.35);
+}
+
+/* 상세정보 */
+
+.skillBox {
+  margin-top: 24px;
+
+  min-height: 200px;
+
+  background: linear-gradient(180deg, #262626, #1f1f1f);
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+
+  transition: 0.2s;
+
+  border-radius: 16px;
+
+  padding: 24px;
+
+  flex: 1;
+}
+
+.tipBox {
+  margin-top: 24px;
+
+  min-height: 200px;
+
+  background: linear-gradient(180deg, #262626, #1f1f1f);
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+
+  transition: 0.2s;
+
+  border-radius: 16px;
+
+  padding: 24px;
+
+  flex: 3;
+}
+
+.addDeck {
+  margin-top: 24px;
+
+  height: 120px;
+
+  border: 2px dashed #aaa;
+
+  border-radius: 20px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  font-size: 42px;
+
+  cursor: pointer;
+}
+
+.centerPanel {
+  color: #d85a5a;
+
+  background: var(--panel-bg);
+
+  padding: 24px;
+
+  width: 100%;
+
+  margin: 0 auto;
+
+  border-radius: 16px;
+
+  background: var(--panel-bg);
+
+  align-self: start;
+
+  height: calc(98vh - 40px);
+
+  overflow-y: auto;
+}
+
+.detailPanel {
+  color: #d85a5a;
+
+  background: #181818;
+
+  height: calc(98vh - 40px);
+
+  display: flex;
+
+  flex-direction: column;
+
+  box-shadow: var(--neon);
+}
+
+.activeDeck {
+  box-shadow: var(--neon);
+
+  outline: 1px solid #ff4040;
+}
+
+.skillRow {
+  display: flex;
+
+  justify-content: space-evenly;
+
+  align-items: center;
+
+  width: 100%;
+
+  margin-top: 12px;
+}
+
+.skillIcon {
+  width: 120px;
+  height: 120px;
+
+  border-radius: 12px;
+
+  object-fit: cover;
+}
+
+.heroRow {
+  display: flex;
+
+  align-items: center;
+
+  gap: 22px;
+
+  margin-top: 18px;
+}
+
+.heroIcon {
+  width: 88px;
+  height: 88px;
+
+  object-fit: cover;
+
+  border-radius: 12px;
+}
+
+.petIcon {
+  width: 68px;
+  height: 68px;
+
+  object-fit: cover;
+
+  border-radius: 12px;
+
+  margin-left: 8px;
+}
+
+.tipEditor {
+  width: 100%;
+
+  min-height: 650px;
+
+  background: #121212;
+
+  color: white;
+
+  border: 1px solid #444;
+
+  border-radius: 10px;
+
+  padding: 12px;
+
+  resize: vertical;
+
+  font-size: 14px;
+}
+
+.saveBtn {
+  width: 100%;
+
+  height: 44px;
+
+  margin-top: 12px;
+
+  border: none;
+
+  border-radius: 10px;
+
+  background: linear-gradient(180deg, #ff5d5d, #d82828);
+
+  color: white;
+
+  font-size: 14px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  flex-shrink: 0;
+}
+
+.headerButtons {
+  display: flex;
+  gap: 8px;
+}
+
+.deleteBtn {
+  height: 26px;
+
+  padding: 0 12px;
+
+  border: none;
+
+  border-radius: 8px;
+
+  background: #444;
+
+  color: white;
+
+  font-size: 11px;
+
+  cursor: pointer;
+}
+
+.deckTitleInput {
+  background: #111;
+
+  color: white;
+
+  border: 1px solid #444;
+
+  border-radius: 8px;
+
+  padding: 6px 10px;
+
+  width: 180px;
+}
+
+.guildInput {
+  margin-top: 8px;
+
+  width: 100%;
+
+  background: #111;
+
+  color: white;
+
+  border: 1px solid #444;
+
+  border-radius: 8px;
+
+  padding: 8px;
+
+  text-align: center;
+}
+
+.deckButtonWrap {
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.deckMenuInput {
+  width: 100%;
+
+  height: 60px;
+
+  background: #181818;
+
+  color: white;
+
+  border: none;
+
+  text-align: center;
+}
+
+.heroSlot {
+  position: relative;
+
+  cursor: pointer;
+}
+
+.centerPanel::-webkit-scrollbar {
+  width: 6px;
+}
+
+.centerPanel::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.centerPanel::-webkit-scrollbar-thumb {
+  background: rgba(255, 64, 64, 0.4);
+
+  border-radius: 999px;
+}
+
+.centerPanel::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 64, 64, 0.7);
+}
