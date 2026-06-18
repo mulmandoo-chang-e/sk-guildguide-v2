@@ -9,6 +9,7 @@ export default function DeckCard({
   onDelete,
   onHeroImageChange,
   onTitleChange,
+  onPositionToggle,
 }) {
   const isActive = selectedDeck?.id === deck.id;
 
@@ -43,42 +44,78 @@ export default function DeckCard({
       </div>
 
       <div className="heroRow">
-        {heroes.map((hero, index) => (
-          <div
-            className="heroSlot"
-            key={hero}
-            onClick={() => {
-              if (isAdmin) {
-                setSelectedIndex(index);
-                fileInputRef.current?.click();
-              }
-            }}
-          >
-            <img
-              src={deck.heroes[index]}
-              alt=""
-              className={index === 3 ? 'petIcon' : 'heroIcon'}
-            />
-          </div>
-        ))}
-        <input
-          type="file"
-          accept="image/*"
-          ref={fileInputRef}
-          style={{ display: 'none' }}
-          onChange={(e) => {
-            const file = e.target.files?.[0];
+  {heroes.map((hero, index) => (
+    <div
+      className={`heroSlot ${
+        index !== 3
+          ? deck.positions?.[index] === 'back'
+            ? 'backHero'
+            : 'frontHero'
+          : ''
+      }`}
+      key={hero}
+      onClick={() => {
+        if (isAdmin) {
+          setSelectedIndex(index);
+          fileInputRef.current?.click();
+        }
+      }}
+    >
+      {isAdmin && index !== 3 && (
+        <div
+        className="positionDot"
+        onClick={(e) => {
+          e.stopPropagation();
+      
+          if (!isAdmin) return;
+      
+          onPositionToggle(
+            deck.id,
+            index
+          );
+        }}
+      >
+          {deck.positions?.[index] === 'back'
+            ? '🔴'
+            : '🔵'}
+        </div>
+      )}
 
-            if (!file) return;
+      <img
+        src={deck.heroes[index]}
+        alt=""
+        className={
+          index === 3
+            ? 'petIcon'
+            : 'heroIcon'
+        }
+      />
+    </div>
+  ))}
 
-            const imageUrl = URL.createObjectURL(file);
+  <input
+    type="file"
+    accept="image/*"
+    ref={fileInputRef}
+    style={{ display: 'none' }}
+    onChange={(e) => {
+      const file = e.target.files?.[0];
 
-            if (selectedIndex === null) return;
+      if (!file) return;
 
-            onHeroImageChange(deck.id, selectedIndex, imageUrl);
-          }}
-        />
-      </div>
+      const imageUrl =
+        URL.createObjectURL(file);
+
+      if (selectedIndex === null) return;
+
+      onHeroImageChange(
+        deck.id,
+        selectedIndex,
+        imageUrl
+      );
+    }}
+  />
+</div>
     </div>
   );
 }

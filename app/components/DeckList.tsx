@@ -1,8 +1,14 @@
+import { useState } from 'react';
+
 export default function DeckList({
   isAdmin,
   setIsAdmin,
   currentPage,
   setCurrentPage,
+  guideNames,
+  setGuideNames,
+  guildName,
+  setGuildName,
 }) {
   return (
     <div className="leftPanel">
@@ -12,38 +18,47 @@ export default function DeckList({
         <h2>길드전 가이드</h2>
 
         {isAdmin ? (
-          <input className="guildInput" defaultValue="길드 이름" />
-        ) : (
-          <p>길드 이름</p>
-        )}
+  <input
+    className="guildInput"
+    value={guildName}
+    onChange={(e) => setGuildName(e.target.value)}
+  />
+) : (
+  <p>{guildName}</p>
+)}
       </div>
 
       <div className="deckMenu">
         <button className="menuTitle">덱 목록</button>
 
-        {['덱 1', '덱 2', '덱 3', '덱 4'].map((deckName) => (
+        {guideNames.map((deckName, index) => (
           <div className="deckButtonWrap">
-            {isAdmin ? (
-              <input className="deckMenuInput" defaultValue={deckName} />
-            ) : (
-              <button
-                className="deckButton"
-                onClick={() =>
-                  setCurrentPage(
-                    deckName === '덱 1'
-                      ? 'deck1'
-                      : deckName === '덱 2'
-                      ? 'deck2'
-                      : deckName === '덱 3'
-                      ? 'deck3'
-                      : 'deck4'
-                  )
-                }
-              >
-                {deckName}
-              </button>
-            )}
-          </div>
+          {isAdmin ? (
+  <input
+    className={`deckMenuInput ${
+      currentPage === `deck${index + 1}` ? 'activeDeck' : ''
+    }`}
+    value={deckName}
+    onClick={() => setCurrentPage(`deck${index + 1}`)}
+    onChange={(e) => {
+      const updated = [...guideNames];
+
+      updated[index] = e.target.value;
+
+      setGuideNames(updated);
+    }}
+  />
+) : (
+  <button
+    className={`deckButton ${
+      currentPage === `deck${index + 1}` ? 'activeDeck' : ''
+    }`}
+    onClick={() => setCurrentPage(`deck${index + 1}`)}
+  >
+    {deckName}
+  </button>
+)}
+        </div>
         ))}
 
         <button className="addButton">+</button>

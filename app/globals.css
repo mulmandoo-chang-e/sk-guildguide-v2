@@ -371,19 +371,16 @@ body {
 
 .skillRow {
   display: flex;
-
-  justify-content: space-evenly;
-
+  justify-content: center;
   align-items: center;
+  gap: 40px;
 
-  width: 100%;
-
-  margin-top: 12px;
+  min-height: 180px;
 }
 
 .skillIcon {
-  width: 120px;
-  height: 120px;
+  width: 128px;
+  height: 128px;
 
   border-radius: 12px;
 
@@ -423,7 +420,7 @@ body {
 .tipEditor {
   width: 100%;
 
-  min-height: 650px;
+  min-height: 680px;
 
   background: #121212;
 
@@ -438,30 +435,6 @@ body {
   resize: vertical;
 
   font-size: 14px;
-}
-
-.saveBtn {
-  width: 100%;
-
-  height: 44px;
-
-  margin-top: 12px;
-
-  border: none;
-
-  border-radius: 10px;
-
-  background: linear-gradient(180deg, #ff5d5d, #d82828);
-
-  color: white;
-
-  font-size: 14px;
-
-  font-weight: 700;
-
-  cursor: pointer;
-
-  flex-shrink: 0;
 }
 
 .headerButtons {
@@ -559,4 +532,63 @@ body {
 
 .centerPanel::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 64, 64, 0.7);
+}
+
+.activeDeck {
+  background: rgba(255, 77, 77, 0.15);
+}
+
+.skillSlot {
+  width: 128px;
+  height: 128px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 8px;
+}
+
+.emptySkill {
+  font-size: 24px;
+  opacity: 0.5;
+}
+
+.skillItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.skillNameInput {
+  width: 128px;
+
+  background: transparent;
+  border: none;
+  outline: none;
+
+  color: white;
+  text-align: center;
+  font-size: 13px;
+}
+
+.positionDot {
+  position: absolute;
+
+  top: 4px;
+  right: 4px;
+
+  cursor: pointer;
+
+  z-index: 10;
+}
+
+.frontHero {
+  border: 3px solid #3b82f6;
+}
+
+.backHero {
+  border: 3px solid #ef4444;
 }
