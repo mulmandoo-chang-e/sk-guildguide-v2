@@ -1,5 +1,13 @@
 import { useRef } from 'react';
 
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL
+} from 'firebase/storage';
+
+import { storage } from '../firebase';
+
 export default function DetailPanel({
   selectedDeck,
   isAdmin,
@@ -19,42 +27,49 @@ const selectedSkillIndex = useRef(null);
   {selectedDeck ? (
     <>
       <div className="skillRow">
-        {selectedDeck.skillOrder.map((skill, index) => (
-          <div className="skillItem" key={index}>
-            <div
-              className="skillSlot"
-              onClick={() => {
-                if (!isAdmin) return;
+      {selectedDeck.skillOrder.map((skill, index) => (
+  <>
+    <div className="skillItem" key={index}>
+      <div
+        className="skillSlot"
+        onClick={() => {
+          if (!isAdmin) return;
 
-                selectedSkillIndex.current = index;
-                fileInputRef.current?.click();
-              }}
-            >
-              {skill ? (
-                <img
-                  src={skill}
-                  alt=""
-                  className="skillIcon"
-                />
-              ) : null}
-            </div>
+          selectedSkillIndex.current = index;
 
-            <input
-              className="skillNameInput"
-              value={
-                selectedDeck.skillNames?.[index] || ''
-              }
-              placeholder="스킬명"
-              onChange={(e) =>
-                onSkillNameChange(
-                  selectedDeck.id,
-                  index,
-                  e.target.value
-                )
-              }
-            />
-          </div>
-        ))}
+          fileInputRef.current?.click();
+        }}
+      >
+        {skill ? (
+          <img
+            src={skill}
+            alt=""
+            className="skillIcon"
+          />
+        ) : null}
+      </div>
+
+      <input
+        className="skillNameInput"
+        value={
+          selectedDeck.skillNames?.[index] || ''
+        }
+        placeholder="스킬명"
+        onChange={(e) =>
+          onSkillNameChange(
+            selectedDeck.id,
+            index,
+            e.target.value
+          )
+        }
+      />
+    </div>
+
+    {index < 2 && (
+      <div className="skillArrow">→</div>
+    )}
+  </>
+))}
       </div>
 
       <input
@@ -62,19 +77,29 @@ const selectedSkillIndex = useRef(null);
         accept="image/*"
         ref={fileInputRef}
         style={{ display: 'none' }}
-        onChange={(e) => {
+        onChange={async (e) => {
           const file = e.target.files?.[0];
-
+        
           if (!file) return;
-
-          const imageUrl =
-            URL.createObjectURL(file);
-
+        
           if (
             selectedSkillIndex.current === null
           )
             return;
-
+        
+          const storageRef = ref(
+            storage,
+            `skills/${Date.now()}-${file.name}`
+          );
+        
+          await uploadBytes(
+            storageRef,
+            file
+          );
+        
+          const imageUrl =
+            await getDownloadURL(storageRef);
+        
           onSkillImageChange(
             selectedDeck.id,
             selectedSkillIndex.current,
@@ -84,7 +109,11 @@ const selectedSkillIndex = useRef(null);
       />
     </>
   ) : (
-    <p>덱을 선택해주세요.</p>
+    <div className="emptyGuide">
+  덱을 선택하면
+  <br />
+  상세 정보가 표시됩니다.
+</div>
   )}
 </div>
 
@@ -102,10 +131,21 @@ const selectedSkillIndex = useRef(null);
 
             </>
           ) : (
-            <p>{selectedDeck.tip}</p>
+            <p
+  className="tipContent"
+  style={{
+    whiteSpace: 'pre-wrap',
+  }}
+>
+  {selectedDeck.tip}
+</p>
           )
         ) : (
-          <p>덱을 선택해주세요.</p>
+          <div className="emptyGuide">
+  덱을 선택하면
+  <br />
+  상세 정보가 표시됩니다.
+</div>
         )}
       </div>
     </div>

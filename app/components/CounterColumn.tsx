@@ -11,7 +11,7 @@ export default function CounterColumn({
     <div className="centerPanel">
       <h2>카운터덱 구성</h2>
 
-      {counterDecks.map((deck) => (
+      {(counterDecks || []).map((deck) => (
         <DeckCard
           key={deck.id}
           deck={deck}

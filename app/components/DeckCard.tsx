@@ -1,4 +1,11 @@
 import { useRef, useState } from 'react';
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL
+} from 'firebase/storage';
+
+import { storage } from '../firebase';
 
 export default function DeckCard({
   deck,
@@ -98,16 +105,26 @@ export default function DeckCard({
     accept="image/*"
     ref={fileInputRef}
     style={{ display: 'none' }}
-    onChange={(e) => {
+    onChange={async (e) => {
       const file = e.target.files?.[0];
-
+    
       if (!file) return;
-
-      const imageUrl =
-        URL.createObjectURL(file);
-
+    
       if (selectedIndex === null) return;
-
+    
+      const storageRef = ref(
+        storage,
+        `heroes/${Date.now()}-${file.name}`
+      );
+    
+      await uploadBytes(
+        storageRef,
+        file
+      );
+    
+      const imageUrl =
+        await getDownloadURL(storageRef);
+    
       onHeroImageChange(
         deck.id,
         selectedIndex,

@@ -11,7 +11,7 @@ export default function DefenseColumn({
     <div className="centerPanel">
       <h2>방어덱 구성</h2>
 
-      {defenseDecks.map((deck) => (
+      {(defenseDecks || []).map((deck) => (
         <DeckCard
           key={deck.id}
           deck={deck}
