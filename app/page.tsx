@@ -17,7 +17,7 @@ export default function Page() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [selectedDeck, setSelectedDeck] = useState<any>(null);
   const [currentPage, setCurrentPage] = useState('deck1');
-  const [deckPages, setDeckPages] = useState({
+  const [deckPages, setDeckPages] = useState<any>({
     deck1: {
       defenseDecks: [],
       counterDecks: [],
@@ -34,6 +34,14 @@ export default function Page() {
       defenseDecks: [],
       counterDecks: [],
     },
+    deck5: {
+      defenseDecks: [],
+      counterDecks: [],
+    },
+    deck6: {
+      defenseDecks: [],
+      counterDecks: [],
+    },
   });
   const [guideNames, setGuideNames] =
   useState([
@@ -41,8 +49,9 @@ export default function Page() {
     '덱 2',
     '덱 3',
     '덱 4',
+    '덱 5',
+    '덱 6',
   ]);
-  
   const [guildName, setGuildName] =
   useState('길드 이름');
 
@@ -277,6 +286,20 @@ export default function Page() {
               data.deckPages.deck4?.defenseDecks || [],
             counterDecks:
               data.deckPages.deck4?.counterDecks || [],
+          },
+      
+          deck5: {
+            defenseDecks:
+              data.deckPages.deck5?.defenseDecks || [],
+            counterDecks:
+              data.deckPages.deck5?.counterDecks || [],
+          },
+      
+          deck6: {
+            defenseDecks:
+              data.deckPages.deck6?.defenseDecks || [],
+            counterDecks:
+              data.deckPages.deck6?.counterDecks || [],
           },
         });
       }

@@ -120,8 +120,6 @@ export default function DeckList({
 )}
         </div>
         ))}
-
-        <button className="addButton">+</button>
       </div>
 
       <div className="bottomButtons">
