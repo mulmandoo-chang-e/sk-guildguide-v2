@@ -17,128 +17,41 @@ export default function Page() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [selectedDeck, setSelectedDeck] = useState<any>(null);
   const [currentPage, setCurrentPage] = useState('deck1');
-  const [deckPages, setDeckPages] = useState(() => {
-    const saved = localStorage.getItem('deckPages');
-  
-    if (saved) {
-      return JSON.parse(saved);
-    }
-  
-    return {
-      deck1: {
-        defenseDecks: [],
-        counterDecks: [],
-      },
-  
-      deck2: {
-        defenseDecks: [],
-        counterDecks: [],
-      },
-  
-      deck3: {
-        defenseDecks: [],
-        counterDecks: [],
-      },
-  
-      deck4: {
-        defenseDecks: [],
-        counterDecks: [],
-      },
-    };
+  const [deckPages, setDeckPages] = useState({
+    deck1: {
+      defenseDecks: [],
+      counterDecks: [],
+    },
+    deck2: {
+      defenseDecks: [],
+      counterDecks: [],
+    },
+    deck3: {
+      defenseDecks: [],
+      counterDecks: [],
+    },
+    deck4: {
+      defenseDecks: [],
+      counterDecks: [],
+    },
   });
-  const [guideNames, setGuideNames] = useState(() => {
-    const saved = localStorage.getItem('guideNames');
+  const [guideNames, setGuideNames] =
+  useState([
+    '덱 1',
+    '덱 2',
+    '덱 3',
+    '덱 4',
+  ]);
   
-    if (saved) {
-      return JSON.parse(saved);
-    }
-  
-    return ['덱 1', '덱 2', '덱 3', '덱 4'];
-  });
-  
-  const [guildName, setGuildName] = useState(() => {
-    const saved = localStorage.getItem('guildName');
-  
-    if (saved) {
-      return saved;
-    }
-  
-    return '길드 이름';
-  });
+  const [guildName, setGuildName] =
+  useState('길드 이름');
 
-  const [lastModified, setLastModified] = useState(() => {
-    const saved = localStorage.getItem('lastModified');
+  const [lastModified, setLastModified] =
+  useState('');
+
+  const [logoImage, setLogoImage] =
+  useState('');
   
-    if (saved) {
-      return saved;
-    }
-  
-    return new Date().toLocaleDateString('ko-KR');
-  });
-
-  const [logoImage, setLogoImage] = useState(() => {
-    const saved = localStorage.getItem('logoImage');
-  
-    if (saved) {
-      return saved;
-    }
-  
-    return '';
-  });
-  
-  const [defenseDecks, setDefenseDecks] = useState(() => {
-    const saved = localStorage.getItem('defenseDecks');
-
-    if (saved) {
-      return JSON.parse(saved);
-    }
-
-    return [
-      {
-        id: 'defense1',
-        title: '라오엘 공격형',
-        heroes: [
-          '/heroes/hero1.png',
-          '/heroes/hero2.png',
-          '/heroes/hero3.png',
-          '/heroes/pet.png',
-        ],
-        skillOrder: [
-          '/skills/skill1.png',
-          '/skills/skill2.png',
-          '/skills/skill3.png',
-        ],
-        tip: '라오엘 먼저 제거',
-      },
-    ];
-  });
-  const [counterDecks, setCounterDecks] = useState(() => {
-    const saved = localStorage.getItem('counterDecks');
-
-    if (saved) {
-      return JSON.parse(saved);
-    }
-
-    return [
-      {
-        id: 'counter1',
-        title: '카운터1',
-        heroes: [
-          '/heroes/hero1.png',
-          '/heroes/hero2.png',
-          '/heroes/hero3.png',
-          '/heroes/pet.png',
-        ],
-        skillOrder: [
-          '/skills/skill1.png',
-          '/skills/skill2.png',
-          '/skills/skill3.png',
-        ],
-        tip: '',
-      },
-    ];
-  });
-
   const onTipChange = (
     deckId: any,
     newTip: any
@@ -284,6 +197,48 @@ export default function Page() {
       new Date().toLocaleDateString('ko-KR')
     );
   };
+
+  useEffect(() => {
+    const savedDeckPages =
+      localStorage.getItem('deckPages');
+  
+    if (savedDeckPages) {
+      setDeckPages(
+        JSON.parse(savedDeckPages)
+      );
+    }
+  
+    const savedGuideNames =
+      localStorage.getItem('guideNames');
+  
+    if (savedGuideNames) {
+      setGuideNames(
+        JSON.parse(savedGuideNames)
+      );
+    }
+  
+    const savedGuildName =
+      localStorage.getItem('guildName');
+  
+    if (savedGuildName) {
+      setGuildName(savedGuildName);
+    }
+  
+    const savedLogo =
+      localStorage.getItem('logoImage');
+  
+    if (savedLogo) {
+      setLogoImage(savedLogo);
+    }
+  
+    const savedDate =
+      localStorage.getItem('lastModified');
+  
+    if (savedDate) {
+      setLastModified(savedDate);
+    }
+  }, []);
+
   useEffect(() => {
     const loadFirebaseData = async () => {
       const snapshot = await get(
