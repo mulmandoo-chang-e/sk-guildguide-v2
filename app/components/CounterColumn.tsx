@@ -6,7 +6,7 @@ export default function CounterColumn({
   selectedDeck,
   setSelectedDeck,
   isAdmin,
-}) {
+}: any) {
   return (
     <div className="centerPanel">
       <h2>카운터덱 구성</h2>

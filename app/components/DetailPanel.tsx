@@ -14,7 +14,7 @@ export default function DetailPanel({
   onTipChange,
   onSkillImageChange,
   onSkillNameChange,
-}) {
+}: any) {
   const fileInputRef = useRef(null);
 const selectedSkillIndex = useRef(null);
   return (
