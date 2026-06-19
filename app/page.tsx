@@ -15,7 +15,7 @@ export default function Page() {
   const [isAdmin, setIsAdmin] = useState(false);
   const ADMIN_PASSWORD = '지약새1';
   const [isLoaded, setIsLoaded] = useState(false);
-  const [selectedDeck, setSelectedDeck] = useState(null);
+  const [selectedDeck, setSelectedDeck] = useState<any>(null);
   const [currentPage, setCurrentPage] = useState('deck1');
   const [deckPages, setDeckPages] = useState(() => {
     const saved = localStorage.getItem('deckPages');
@@ -139,8 +139,11 @@ export default function Page() {
     ];
   });
 
-  const onTipChange = (deckId, newTip) => {
-    setDeckPages((prev) => ({
+  const onTipChange = (
+    deckId: any,
+    newTip: any
+  ) => {
+    setDeckPages((prev: any) => ({
       ...prev,
   
       [currentPage]: {
@@ -168,11 +171,11 @@ export default function Page() {
   };
 
   const onSkillImageChange = (
-    deckId,
-    skillIndex,
-    imageUrl
+    deckId: any,
+    skillIndex: any,
+    imageUrl: any
   ) => {
-    setDeckPages((prev) => ({
+    setDeckPages((prev: any) => ({
       ...prev,
   
       [currentPage]: {
@@ -222,11 +225,11 @@ export default function Page() {
   };
 
   const onSkillNameChange = (
-    deckId,
-    skillIndex,
-    newName
+    deckId: any,
+    skillIndex: any,
+    newName: any
   ) => {
-    setDeckPages((prev) => ({
+    setDeckPages((prev: any) => ({
       ...prev,
   
       [currentPage]: {
@@ -404,7 +407,7 @@ export default function Page() {
       <DefenseColumn
         defenseDecks={deckPages[currentPage].defenseDecks}
         setDefenseDecks={(newDecks) => {
-          setDeckPages((prev) => ({
+          setDeckPages((prev: any) => ({
             ...prev,
         
             [currentPage]: {
@@ -424,7 +427,7 @@ export default function Page() {
       <CounterColumn
         counterDecks={deckPages[currentPage].counterDecks}
         setCounterDecks={(newDecks) => {
-          setDeckPages((prev) => ({
+          setDeckPages((prev: any) => ({
             ...prev,
         
             [currentPage]: {
