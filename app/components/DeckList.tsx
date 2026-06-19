@@ -89,7 +89,10 @@ export default function DeckList({
         <button className="menuTitle">덱 목록</button>
 
         {guideNames.map((deckName, index) => (
-          <div className="deckButtonWrap">
+  <div
+    key={index}
+    className="deckButtonWrap"
+  >
           {isAdmin ? (
   <input
     className={`deckMenuInput ${
