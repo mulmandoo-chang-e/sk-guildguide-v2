@@ -1,64 +1,155 @@
+import { useRef } from 'react';
+
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL
+} from 'firebase/storage';
+
+import { storage } from '../firebase';
+
 export default function DeckList({
   isAdmin,
   setIsAdmin,
   currentPage,
   setCurrentPage,
+  guideNames,
+  setGuideNames,
+  guildName,
+  setGuildName,
+  logoImage,
+  setLogoImage,
+  lastModified,
 }) {
+  const fileInputRef = useRef(null);
+
   return (
     <div className="leftPanel">
-      <div className="logoBox">세나 로고</div>
+      <div
+  className="logoBox"
+  onClick={() => {
+    if (!isAdmin) return;
+
+    fileInputRef.current?.click();
+  }}
+>
+  {logoImage ? (
+    <img
+      src={logoImage}
+      alt=""
+      className="siteLogo"
+    />
+  ) : (
+    '세나 로고'
+  )}
+
+  <input
+    type="file"
+    accept="image/*"
+    ref={fileInputRef}
+    style={{ display: 'none' }}
+    onChange={async (e) => {
+      const file = e.target.files?.[0];
+    
+      if (!file) return;
+    
+      const storageRef = ref(
+        storage,
+        `logos/${Date.now()}-${file.name}`
+      );
+    
+      await uploadBytes(
+        storageRef,
+        file
+      );
+    
+      const imageUrl =
+        await getDownloadURL(storageRef);
+    
+      setLogoImage(imageUrl);
+    }}
+  />
+</div>
 
       <div className="guildBox">
         <h2>길드전 가이드</h2>
 
         {isAdmin ? (
-          <input className="guildInput" defaultValue="길드 이름" />
-        ) : (
-          <p>길드 이름</p>
-        )}
+  <input
+    className="guildInput"
+    value={guildName}
+    onChange={(e) => setGuildName(e.target.value)}
+  />
+) : (
+  <p>{guildName}</p>
+)}
       </div>
 
       <div className="deckMenu">
         <button className="menuTitle">덱 목록</button>
 
-        {['덱 1', '덱 2', '덱 3', '덱 4'].map((deckName) => (
-          <div className="deckButtonWrap">
-            {isAdmin ? (
-              <input className="deckMenuInput" defaultValue={deckName} />
-            ) : (
-              <button
-                className="deckButton"
-                onClick={() =>
-                  setCurrentPage(
-                    deckName === '덱 1'
-                      ? 'deck1'
-                      : deckName === '덱 2'
-                      ? 'deck2'
-                      : deckName === '덱 3'
-                      ? 'deck3'
-                      : 'deck4'
-                  )
-                }
-              >
-                {deckName}
-              </button>
-            )}
-          </div>
+        {guideNames.map((deckName, index) => (
+  <div
+    key={index}
+    className="deckButtonWrap"
+  >
+          {isAdmin ? (
+  <input
+    className={`deckMenuInput ${
+      currentPage === `deck${index + 1}` ? 'activeDeck' : ''
+    }`}
+    value={deckName}
+    onClick={() => setCurrentPage(`deck${index + 1}`)}
+    onChange={(e) => {
+      const updated = [...guideNames];
+
+      updated[index] = e.target.value;
+
+      setGuideNames(updated);
+    }}
+  />
+) : (
+  <button
+    className={`deckButton ${
+      currentPage === `deck${index + 1}` ? 'activeDeck' : ''
+    }`}
+    onClick={() => setCurrentPage(`deck${index + 1}`)}
+  >
+    {deckName}
+  </button>
+)}
+        </div>
         ))}
 
         <button className="addButton">+</button>
       </div>
 
       <div className="bottomButtons">
-        <div className="updateDate">
-          최종 수정
-          <br />
-          2026.06.12
-        </div>
+      <div className="updateDate">
+  최종 수정
+  <br />
+  {lastModified}
+</div>
 
-        <button className="bottomBtn" onClick={() => setIsAdmin(!isAdmin)}>
-          {isAdmin ? '관리자 모드' : '로그인'}
-        </button>
+        <button
+  className="bottomBtn"
+  onClick={() => {
+    if (isAdmin) {
+      setIsAdmin(false);
+      return;
+    }
+
+    const password = prompt('비밀번호 입력');
+
+    if (password === '지약새1') {
+      setIsAdmin(true);
+    } else {
+      alert('비밀번호가 틀렸습니다.');
+    }
+  }}
+>
+  {isAdmin ? '로그아웃' : '로그인'}
+</button>
       </div>
     </div>
   );

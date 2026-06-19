@@ -11,7 +11,7 @@ export default function DefenseColumn({
     <div className="centerPanel">
       <h2>방어덱 구성</h2>
 
-      {defenseDecks.map((deck) => (
+      {(defenseDecks || []).map((deck) => (
         <DeckCard
           key={deck.id}
           deck={deck}
@@ -50,6 +50,31 @@ export default function DefenseColumn({
               })
             );
           }}
+          onPositionToggle={(deckId, heroIndex) => {
+            setDefenseDecks(
+              defenseDecks.map((d) => {
+                if (d.id !== deckId) return d;
+          
+                const updatedPositions = [
+                  ...(d.positions || [
+                    'front',
+                    'front',
+                    'front',
+                  ]),
+                ];
+          
+                updatedPositions[heroIndex] =
+                  updatedPositions[heroIndex] === 'front'
+                    ? 'back'
+                    : 'front';
+          
+                return {
+                  ...d,
+                  positions: updatedPositions,
+                };
+              })
+            );
+          }}
         />
       ))}
 
@@ -63,18 +88,34 @@ export default function DefenseColumn({
 
             {
               id: Date.now().toString(),
-
+            
               title: '새 덱',
-
+            
               heroes: [
                 '/heroes/hero1.png',
                 '/heroes/hero2.png',
                 '/heroes/hero3.png',
                 '/heroes/pet.png',
               ],
-
-              skillOrder: [],
-
+            
+              positions: [
+                'front',
+                'front',
+                'front',
+              ],
+            
+              skillOrder: [
+                '',
+                '',
+                '',
+              ],
+            
+              skillNames: [
+                '',
+                '',
+                '',
+              ],
+            
               tip: '',
             },
           ]);
