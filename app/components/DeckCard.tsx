@@ -51,7 +51,7 @@ export default function DeckCard({
       </div>
 
       <div className="heroRow">
-  {heroes.map((hero, index) => (
+  {heroes.map((hero: any, index: any) => (
     <div
       className={`heroSlot ${
         index !== 3

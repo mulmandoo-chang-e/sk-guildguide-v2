@@ -27,7 +27,7 @@ const selectedSkillIndex = useRef(null);
   {selectedDeck ? (
     <>
       <div className="skillRow">
-      {selectedDeck.skillOrder.map((skill, index) => (
+      {selectedDeck.skillOrder.map((skill: any, index: any) => (
   <>
     <div className="skillItem" key={index}>
       <div

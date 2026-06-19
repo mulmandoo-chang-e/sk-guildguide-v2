@@ -88,7 +88,7 @@ export default function DeckList({
       <div className="deckMenu">
         <button className="menuTitle">덱 목록</button>
 
-        {guideNames.map((deckName, index) => (
+        {guideNames.map((deckName: any, index: any) => (
   <div
     key={index}
     className="deckButtonWrap"
