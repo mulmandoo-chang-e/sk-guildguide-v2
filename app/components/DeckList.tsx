@@ -20,7 +20,7 @@ export default function DeckList({
   logoImage,
   setLogoImage,
   lastModified,
-}) {
+}: any) {
   const fileInputRef = useRef(null);
 
   return (

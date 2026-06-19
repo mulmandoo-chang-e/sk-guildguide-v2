@@ -6,7 +6,7 @@ export default function DefenseColumn({
   selectedDeck,
   setSelectedDeck,
   isAdmin,
-}) {
+}: any) {
   return (
     <div className="centerPanel">
       <h2>방어덱 구성</h2>

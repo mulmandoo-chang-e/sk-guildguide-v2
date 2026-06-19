@@ -17,7 +17,7 @@ export default function DeckCard({
   onHeroImageChange,
   onTitleChange,
   onPositionToggle,
-}) {
+}: any) {
   const isActive = selectedDeck?.id === deck.id;
 
   const fileInputRef = useRef<HTMLInputElement>(null);
