@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 
 import {
   ref,
@@ -22,6 +22,9 @@ export default function DeckList({
   lastModified,
 }: any) {
   const fileInputRef = useRef(null);
+
+  const [mobileMenuOpen, setMobileMenuOpen] =
+  useState(false);
 
   return (
     <div className="leftPanel">
@@ -86,41 +89,121 @@ export default function DeckList({
       </div>
 
       <div className="deckMenu">
-        <button className="menuTitle">덱 목록</button>
 
-        {guideNames.map((deckName: any, index: any) => (
-  <div
-    key={index}
-    className="deckButtonWrap"
-  >
-          {isAdmin ? (
-  <input
-    className={`deckMenuInput ${
-      currentPage === `deck${index + 1}` ? 'activeDeck' : ''
-    }`}
-    value={deckName}
-    onClick={() => setCurrentPage(`deck${index + 1}`)}
-    onChange={(e) => {
-      const updated = [...guideNames];
+  {/* PC */}
 
-      updated[index] = e.target.value;
+  <div className="pcDeckMenu">
 
-      setGuideNames(updated);
-    }}
-  />
-) : (
-  <button
-    className={`deckButton ${
-      currentPage === `deck${index + 1}` ? 'activeDeck' : ''
-    }`}
-    onClick={() => setCurrentPage(`deck${index + 1}`)}
-  >
-    {deckName}
-  </button>
-)}
-        </div>
-        ))}
+    <button className="menuTitle">
+      덱 목록
+    </button>
+
+    {guideNames.map((deckName: any, index: any) => (
+
+      <div
+        key={index}
+        className="deckButtonWrap"
+      >
+
+        {isAdmin ? (
+
+          <input
+            className={`deckMenuInput ${
+              currentPage === `deck${index + 1}`
+                ? 'activeDeck'
+                : ''
+            }`}
+            value={deckName}
+            onClick={() =>
+              setCurrentPage(`deck${index + 1}`)
+            }
+            onChange={(e) => {
+
+              const updated = [...guideNames];
+
+              updated[index] = e.target.value;
+
+              setGuideNames(updated);
+
+            }}
+          />
+
+        ) : (
+
+          <button
+            className={`deckButton ${
+              currentPage === `deck${index + 1}`
+                ? 'activeDeck'
+                : ''
+            }`}
+            onClick={() =>
+              setCurrentPage(`deck${index + 1}`)
+            }
+          >
+
+            {deckName}
+
+          </button>
+
+        )}
+
       </div>
+
+    ))}
+
+  </div>
+
+  {/* Mobile */}
+
+  <div className="mobileDeckMenu">
+
+    <button
+      className="mobileMenuButton"
+      onClick={() =>
+        setMobileMenuOpen(!mobileMenuOpen)
+      }
+    >
+
+      {mobileMenuOpen
+        ? '▲'
+        : '▼'} 덱 목록
+
+    </button>
+    {mobileMenuOpen && (
+
+<div className="mobileMenuList">
+
+  {guideNames.map((deckName: any, index: any) => (
+
+    <button
+      key={index}
+      className={`mobileDeckButton ${
+        currentPage === `deck${index + 1}`
+          ? 'activeDeck'
+          : ''
+      }`}
+      onClick={() => {
+
+        setCurrentPage(`deck${index + 1}`);
+
+        setMobileMenuOpen(false);
+
+      }}
+    >
+
+      {deckName}
+
+    </button>
+
+  ))}
+
+</div>
+
+)}
+
+</div>
+
+</div>
 
       <div className="bottomButtons">
       <div className="updateDate">
@@ -152,3 +235,4 @@ export default function DeckList({
     </div>
   );
 }
+

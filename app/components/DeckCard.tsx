@@ -44,9 +44,25 @@ export default function DeckCard({
             </button>
           )}
 
-          <button className="detailBtn" onClick={() => setSelectedDeck(deck)}>
-            상세보기
-          </button>
+<button
+  className="detailBtn"
+  onClick={() => {
+    setSelectedDeck(deck);
+
+    if (window.innerWidth <= 768) {
+      setTimeout(() => {
+        document
+          .querySelector('.detailPanel')
+          ?.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start',
+          });
+      }, 50);
+    }
+  }}
+>
+  상세보기
+</button>
         </div>
       </div>
 
