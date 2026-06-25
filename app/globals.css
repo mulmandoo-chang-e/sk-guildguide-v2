@@ -740,3 +740,163 @@ body {
     transparent
   );
 }
+
+/* ========================= */
+/* 1920 이하 */
+/* ========================= */
+
+@media (max-width: 1920px) {
+  .mainLayout {
+    grid-template-columns:
+      220px
+      500px
+      500px
+      600px;
+
+    column-gap: 32px;
+
+    padding: 20px;
+  }
+
+  .deckCard {
+    padding: 18px;
+  }
+
+  .heroIcon {
+    width: 72px;
+    height: 72px;
+  }
+
+  .petIcon {
+    width: 56px;
+    height: 56px;
+  }
+
+  .skillIcon {
+    width: 96px;
+    height: 96px;
+  }
+
+  .heroRow {
+    gap: 14px;
+  }
+
+  .skillRow {
+    gap: 16px;
+  }
+
+  .deckTitleInput {
+    width: 150px;
+  }
+
+  .guildBox h2 {
+    font-size: 18px;
+  }
+}
+
+/* ========================= */
+/* 1600 이하 */
+/* ========================= */
+
+@media (max-width: 1600px) {
+  .mainLayout {
+    grid-template-columns:
+      190px
+      430px
+      430px
+      520px;
+
+    column-gap: 24px;
+
+    padding: 16px;
+  }
+
+  .deckCard {
+    padding: 16px;
+  }
+
+  .heroIcon {
+    width: 60px;
+    height: 60px;
+  }
+
+  .petIcon {
+    width: 48px;
+    height: 48px;
+  }
+
+  .skillIcon {
+    width: 80px;
+    height: 80px;
+  }
+
+  .heroRow {
+    gap: 10px;
+  }
+
+  .detailBtn,
+  .deleteBtn {
+    font-size: 10px;
+    padding: 0 10px;
+  }
+}
+
+/* ===========================
+   Mobile
+=========================== */
+
+@media (max-width: 768px) {
+  .mainLayout {
+    display: flex;
+    flex-direction: column;
+
+    gap: 16px;
+
+    padding: 12px;
+  }
+
+  .leftPanel,
+  .centerPanel,
+  .detailPanel {
+    width: 100%;
+    height: auto;
+  }
+
+  .centerPanel {
+    overflow: visible;
+  }
+
+  .detailPanel {
+    display: none;
+  }
+
+  .panel {
+    padding: 16px;
+  }
+
+  .deckCard {
+    margin-top: 16px;
+    padding: 16px;
+    min-height: auto;
+  }
+
+  .heroIcon {
+    width: 56px;
+    height: 56px;
+  }
+
+  .petIcon {
+    width: 46px;
+    height: 46px;
+  }
+
+  .skillIcon {
+    width: 72px;
+    height: 72px;
+  }
+
+  .detailBtn {
+    font-size: 10px;
+    padding: 0 10px;
+  }
+}
